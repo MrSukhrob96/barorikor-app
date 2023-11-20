@@ -1,0 +1,91 @@
+version: '3.8'
+
+networks:
+  barori_kor:
+    driver: bridge
+
+services:
+  barori_kor_app:
+    image: nginx:alpine
+    container_name: barori_kor_app
+    ports:
+      - "8000:8000" 
+    networks:
+      - barori_kor
+    volumes:
+      - .:/var/www/barori-kor 
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - barori_kor_php
+
+  barori_kor_php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: barori_kor_php
+    volumes:
+      - .:/var/www/barori-kor 
+    ports:
+      - "9000:9000"
+    networks:
+      - barori_kor
+    depends_on:
+      - barori_kor_postgres
+      - barori_kor_rabbitmq
+      - barori_kor_redis
+
+  barori_kor_postgres: 
+    image: postgres:latest
+    container_name: barori_kor_postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: barori_kor_user
+      POSTGRES_PASSWORD: barori_kor_password
+      POSTGRES_DB: barori_kor
+    ports:
+      - "5432:5432"
+    networks:
+      - barori_kor
+
+  barori_kor_rabbitmq:
+    image: "rabbitmq:management"
+    container_name: barori_kor_rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - barori_kor
+
+  barori_kor_redis:
+    image: "redis:latest"
+    container_name: barori_kor_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - barori_kor
+
+  barori_kor_elasticsearch:
+    container_name: barori_kor_els
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0
+    ports:
+      - 9200:9200
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node 
+      - xpack.security.enabled=false 
+    networks:
+      - barori_kor
+
+  barori_kor_kibana:
+    container_name: barori_kor_kibana
+    image: docker.elastic.co/kibana/kibana:8.7.0
+    ports:
+      - 5601:5601
+    depends_on:
+      - barori_kor_elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://barori_kor_elasticsearch:9200 
+    networks:
+      - barori_kor

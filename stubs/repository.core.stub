@@ -1,0 +1,86 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
+abstract class CoreRepository {
+
+    public Model $model;
+
+    public function __construct(Model $model){   
+        $this->model = $model;
+    }
+    
+
+    /**
+    * Method getWithPagination
+    *
+    * @param int $limit
+    * @param int $offset
+    * @param array $columns
+    * @param array $relations
+    */
+    public function getWithPagination(
+        int $limit, 
+        int $offset = 20, 
+        array $columns = ['*'], 
+        array $relations = [] 
+    ): ?LengthAwarePaginator {
+
+    }
+
+    /**
+    * Method GetAll
+    *
+    * @param array $columns
+    * @param array $relations
+    */
+    public function getAll(array $columns = ['*'], array $relations = []): ?Collection {
+
+    }
+
+    /**
+    * Method findById
+    *
+    * @param int|string $id
+    * @param array $columns
+    * @param array $relations
+    */
+    public function findById(int|string $id, array $columns = ['*'], array $relations = []): ?Model {
+
+    }
+
+    /**
+    * Method create
+    *
+    * @param array $data
+    * @returns array
+    */
+    public function create(array $data): ?Model {
+
+    }
+
+    /**
+    * Method update
+    *
+    * @param int|string $id
+    * @param array $data
+    * @returns array
+    */
+    public function update(int|string $id, array $data): ?Model {
+
+    }
+
+    /**
+    * Method delete
+    *
+    * @param int|string $id
+    * @returns void
+    */
+    public function delete(int|string $id): void {
+
+    }
+}

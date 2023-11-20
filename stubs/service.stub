@@ -1,0 +1,81 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use App\Models\{{ class }};
+use App\DTO\{{ class }}\Create{{ class }}DTO;
+use App\DTO\{{ class }}\Update{{ class }}DTO;
+use App\Repositories\Interfaces\{{ class }}RepositoryInterface;
+use App\Services\Interfaces\{{ class }}ServiceInterface;
+
+class {{ class }}Service implements {{ class }}ServiceInterface {
+
+    public function __construct(
+        private readonly {{ class }}RepositoryInterface ${{ class }}Repository,
+    ){
+    }
+
+    /**
+    * Method get{{ class }}WithPagination
+    *
+    * @return ?LengthAwarePaginator
+    */
+    public function get{{ class }}WithPagination(): ?LengthAwarePaginator
+    {
+
+    }
+
+    /**
+    * Method getAll{{ class }}
+    *
+    * @returns Collection
+    */
+    public function getAll{{ class }} (): ?Collection {
+
+    }
+
+    /**
+    * Method find{{ class }}ById
+    *
+    * @param int|string $id
+    * @returns ?{{ class }}
+    */
+    public function find{{ class }}ById(int|string $id): ?{{ class }} {
+
+    }
+
+    /**
+    * Method create{{ class }}
+    *
+    * @param Create{{ class }}DTO $dto
+    * @returns ?{{ class }} 
+    */
+    public function create{{ class }} (Create{{ class }}DTO $dto): ?{{ class }} {
+
+    }
+
+    /**
+    * Method update{{ class }}
+    *
+    * @param int|string $id
+    * @param Update{{ class }}DTO $dto
+    * @returns ?{{ class }} 
+    */
+    public function update{{ class }} (int|string $id, Update{{ class }}DTO $dto): ?{{ class }} {
+
+    }
+
+    /**
+    * Method delete{{ class }}
+    *
+    * @param int|string $id
+    * @returns void
+    * @throws \Exception
+    */
+    public function delete{{ class }} (int|string $id): void {
+
+    }
+
+}

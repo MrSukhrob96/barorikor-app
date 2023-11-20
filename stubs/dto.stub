@@ -1,0 +1,18 @@
+<?php
+
+namespace {{ namespace }};
+
+class {{ option }}{{ class }}DTO {
+
+    public function __constructor(array $data) {
+
+    }
+
+
+    public function toArray(): array {
+        return array(
+
+        );
+    }
+
+}

@@ -1,0 +1,107 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+
+use {{ rootNamespace }}Services\Interfaces\{{class}}ServiceInterface;
+use {{ rootNamespace }}Http\Requests\{{class}}\Create{{class}}Request;
+use {{ rootNamespace }}Http\Requests\{{class}}\Update{{class}}Request;
+use {{ rootNamespace }}Http\Resources\{{class}}\{{class}}Resource;
+use {{ rootNamespace }}Http\Resources\{{class}}\{{class}}sResource;
+use {{ rootNamespace }}DTO\{{class}}\Create{{class}}DTO;
+use {{ rootNamespace }}DTO\{{class}}\Update{{class}}DTO;
+
+class {{ class }}Controller extends Controller
+{
+    public function __construct(
+        protected readonly {{class}}ServiceInterface ${{class}}Service,
+    ){
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        try{
+            $data = $this->{{ class }}Service->getAll{{ class }}();
+
+            return response()->success(
+                "name.success.success",
+                {{ class }}Resources::collection($data),
+            );
+        }catch(\Exception $ex) {
+            return response()->error($ex->getMessage());
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Create{{ class }}Request $request)
+    {
+        try{
+            $dto = new Create{{ class }}DTO($request->validated());
+            $data = $this->{{ class }}Service->create{{ class }}($dto);
+
+            return response()->success(
+                "name.success.created",
+                new {{ class }}Resource($data),
+            );
+        }catch(\Exception $ex) {
+            return response()->error($ex->getMessage());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        try{
+            $data = $this->{{class}}Service->find{{ class }}ById($id);
+
+            return response()->success(
+                "name.success.showed",
+                 new {{ class }}Resource($data),
+            );
+        }catch(\Exception $ex) {
+            return response()->error($ex->getMessage());
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Update{{class}}Request $request, string $id)
+    {
+        try{
+            $dto = new Update{{class}}DTO($request->validated());
+            $data = $this->{{ class }}Service->update{{ class }}($id, $dto);
+
+            return response()->success(
+                "name.success.updated",
+                new {{ class }}Resource($data),
+            );
+        }catch(\Exception $ex) {
+            return response()->error($ex->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try{
+            $this->{{ class }}Service->delete{{ class }}($id);
+
+            return response()->success(
+                "name.success.deleted"
+            );
+        }catch(\Exception $ex) {
+            return response()->error($ex->getMessage());
+        }
+    }
+}

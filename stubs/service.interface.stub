@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\DTO\{{ class }}\Create{{ class }}DTO;
+use App\DTO\{{ class }}\Update{{ class }}DTO;
+
+interface {{ class }}ServiceInterface {
+
+    public function getAll{{ class }}();
+
+    public function find{{ class }}ById(string|int $id);
+
+    public function create{{ class }}(Create{{ class }}DTO $dto);
+
+    public function update{{ class }}(int|string $id, Update{{ class }}DTO $dto);
+
+    public function delete{{ class }}(int|string $id);
+
+}
